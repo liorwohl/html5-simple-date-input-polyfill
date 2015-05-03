@@ -7,11 +7,17 @@
   </head>
   <body>
 
+    normal:
     <input type="date" />
 
+    dynamically created:
     <script>
-      //test dynamicly created input
-      document.write("<input type=\"date\" />");
+      //test on dynamically created input
+      setTimeout(function(){
+        var input = document.createElement("input");
+        input.type = "date";
+        document.body.appendChild(input);
+      }, 2000);
     </script>
 
     <script src="main.js"></script>

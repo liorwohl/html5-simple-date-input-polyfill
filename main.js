@@ -470,8 +470,17 @@ datepickr.init.prototype = {
 
 //my addition
 
-//if not mobile
+//check if not mobile
 if (typeof window.orientation === 'undefined') {
-  //add the datepickr to any input[type=date]
-  datepickr('input[type=date]', { dateFormat: 'Y-m-d' });
+  //this is on mousedown event so it will capture new inputs that might joined to the dom
+  document.querySelector('body').addEventListener('mousedown', function (event) {
+    //get and loop all the input[type=date]s
+    var dateInputs = document.querySelectorAll('input[type=date]');
+    [].forEach.call(dateInputs, function (dateInput) { 
+      //call datepickr function on the input
+      datepickr(dateInput, { dateFormat: 'Y-m-d' });
+      //make it normal "text" input from now on
+      dateInput.type = "text";
+    });
+  });
 }
