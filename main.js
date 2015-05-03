@@ -343,6 +343,11 @@ datepickr.init = function (element, instanceConfig) {
 
                 self.element.value = formatDate(self.config.dateFormat, currentTimestamp);
 
+                //added by lior wohl so angular will see the change in the date
+                var fakeEvent = document.createEvent('KeyboardEvent');
+                fakeEvent.initEvent('keyup', true, true, window, false, false, false, false, 38, 38);
+                target.dispatchEvent(fakeEvent); 
+
                 close();
                 buildDays();
             }
