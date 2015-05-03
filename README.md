@@ -8,3 +8,5 @@ I just added one line of code to make it automatically work with &lt;input type=
 npm install git://github.com/liorwohl/html5-simple-date-input-polyfill --save --force
 
 then add to your JS (if using browserify): require('html5-simple-date-input-polyfill'); 
+
+and to your SCSS: @import "../node_modules/html5-simple-date-input-polyfill/main.css";
