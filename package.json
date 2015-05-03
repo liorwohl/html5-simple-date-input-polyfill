@@ -2,8 +2,11 @@
   "name": "html5-simple-date-input-polyfill",
   "version": "1.0.0",
   "description": "input type date polyfill",
-  "author": "Lior Wohl <liorwohl@gmail.com>",
   "main": "main.js",
+  "author": {
+    "name": "Lior Wohl",
+    "email": "liorwohl@gmail.com"
+  },
   "repository": {
     "type": "git",
     "url": "https://github.com/liorwohl/html5-simple-date-input-polyfill"
@@ -18,5 +21,6 @@
     "type"
   ],
   "analyze": true,
-  "license": "MIT"
+  "license": "MIT",
+  "readme": "ERROR: No README data found!"
 }
