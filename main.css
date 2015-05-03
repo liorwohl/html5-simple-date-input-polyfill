@@ -1,0 +1,45 @@
+.datepickr-wrapper {
+    display: inline-block;
+    position: relative;
+}
+
+.datepickr-calendar {
+  display: none;
+  position: absolute;
+  top: 100%;
+  left: 0;
+  z-index: 100;
+}
+
+.open .datepickr-calendar {
+  display: block;
+  text-align: center;
+}
+
+.datepickr-current-month {
+  display: block;
+}
+
+.datepickr-prev-month, .datepickr-next-month, .datepickr-day {
+  cursor: pointer;
+}
+
+.datepickr-calendar .datepickr-prev-month {
+  float: left;
+}
+
+.datepickr-calendar .datepickr-next-month {
+  float: right;
+}
+
+.datepickr-calendar table {
+  width: 100%;
+}
+
+.datepickr-calendar th, .datepickr-calendar td {
+    width: 14.3%;
+}
+
+.datepickr-calendar .selected .datepickr-day {
+  font-weight: bold;
+}

@@ -365,7 +365,7 @@ datepickr.init = function (element, instanceConfig) {
 
         if (self.element.nodeName === 'INPUT') {
             openEvent = 'focus';
-            self.addEventListener(self.element, 'blur', close, false);
+            //self.addEventListener(self.element, 'blur', close, false); //commented by lior wohl to allow changing months
         }
 
         self.addEventListener(self.element, openEvent, open, false);
@@ -473,5 +473,5 @@ datepickr.init.prototype = {
 //if not mobile
 if (typeof window.orientation === 'undefined') {
   //add the datepickr to any input[type=date]
-  datepickr('input[type=date]');
+  datepickr('input[type=date]', { dateFormat: 'Y-m-d' });
 }
