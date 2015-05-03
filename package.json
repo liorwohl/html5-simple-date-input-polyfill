@@ -1,0 +1,22 @@
+{
+  "name": "html5-simple-date-input-polyfill",
+  "version": "1.0.0",
+  "description": "just include this simple script and IE and Firefox will support <input type=date>, without any dependencies",
+  "author": "Lior Wohl <liorwohl@gmail.com>",
+  "main": "main.js",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/liorwohl/html5-simple-date-input-polyfill"
+  },
+  "bugs": {
+    "url": "https://github.com/liorwohl/html5-simple-date-input-polyfill/issues"
+  },
+  "keywords": [
+    "html5",
+    "date",
+    "datepicker",
+    "type"
+  ],
+  "analyze": true,
+  "license": "MIT"
+}
