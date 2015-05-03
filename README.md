@@ -6,3 +6,5 @@ I just added one line of code to make it automatically work with &lt;input type=
 
 # Install
 npm install git://github.com/liorwohl/html5-simple-date-input-polyfill --save-dev
+
+then add to your JS (if using browserify): require('html5-simple-date-input-polyfill'); 
