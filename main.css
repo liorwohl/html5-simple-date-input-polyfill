@@ -40,11 +40,11 @@
 }
 
 .datepickr-calendar th, .datepickr-calendar td {
-    width: 30px;
-    text-align: center;
-    padding: 5px 0;
-    margin: 0;
-    line-height: normal;
+  min-width: 30px;
+  text-align: center;
+  padding: 5px 0;
+  margin: 0;
+  line-height: normal;
 }
 
 .datepickr-calendar .selected .datepickr-day {
