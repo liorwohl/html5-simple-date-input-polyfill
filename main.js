@@ -1,9 +1,7 @@
-//my addition
-datepickr('input[type=date]');
-
 /*
-FROM HERE ITS JUST COPIED FROM
+ITS JUST COPIED FROM
 https://github.com/joshsalverda/datepickr/blob/master/src/datepickr.js
+my code is at the bottom
 */
 
 var datepickr = function (selector, config) {
@@ -469,3 +467,11 @@ datepickr.init.prototype = {
         firstDayOfWeek: 0
     }
 };
+
+//my addition
+
+//if not mobile
+if (typeof window.orientation === 'undefined') {
+  //add the datepickr to any input[type=date]
+  datepickr('input[type=date]');
+}
