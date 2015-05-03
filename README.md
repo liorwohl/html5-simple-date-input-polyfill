@@ -5,6 +5,6 @@ This is just a repackaging of https://github.com/joshsalverda/datepickr/blob/mas
 I just added one line of code to make it automatically work with &lt;input type="date"> and a proper package.json file so it will work with "npm install".
 
 # Install
-npm install git://github.com/liorwohl/html5-simple-date-input-polyfill --save-dev
+npm install git://github.com/liorwohl/html5-simple-date-input-polyfill --save --force
 
 then add to your JS (if using browserify): require('html5-simple-date-input-polyfill'); 
