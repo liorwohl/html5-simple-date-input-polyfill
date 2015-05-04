@@ -1,52 +1,12 @@
-.datepickr-wrapper {
-    display: inline-block;
-    position: relative;
-}
-
-.datepickr-calendar {
-  display: none;
+.calander {
   position: absolute;
-  top: 100%;
-  left: 0;
-  z-index: 100;
-
-  box-shadow: 2px 2px 10px 2px #888888;
   background: #fff;
-}
-
-.open .datepickr-calendar {
-  display: block;
+  border: 1px solid #c0c0c0;
   text-align: center;
 }
-
-.datepickr-current-month {
-  display: block;
+.calander th, .calander td {
+  width: 14%;
 }
-
-.datepickr-prev-month, .datepickr-next-month {
-  padding: 0 5px;
-}
-
-.datepickr-prev-month, .datepickr-next-month, .datepickr-day {
+.calander td {
   cursor: pointer;
-}
-
-.datepickr-calendar .datepickr-prev-month {
-  float: left;
-}
-
-.datepickr-calendar .datepickr-next-month {
-  float: right;
-}
-
-.datepickr-calendar th, .datepickr-calendar td {
-  min-width: 30px;
-  text-align: center;
-  padding: 5px 0;
-  margin: 0;
-  line-height: normal;
-}
-
-.datepickr-calendar .selected .datepickr-day {
-  font-weight: bold;
 }

@@ -1,491 +1,173 @@
-/*
-ITS JUST COPIED FROM
-https://github.com/joshsalverda/datepickr/blob/master/src/datepickr.js
-my code is at the bottom
-*/
+function calanderExtender (theInput) {
 
-var datepickr = function (selector, config) {
-    'use strict';
-    var elements,
-        createInstance,
-        instances = [],
-        i;
+  var self = this;
 
-    datepickr.prototype = datepickr.init.prototype;
+  this.theInput = theInput;
+  this.container = null;
+  this.theCalDiv = null;
+  this.selectedDate = new Date();
 
-    createInstance = function (element) {
-        if (element._datepickr) {
-            element._datepickr.destroy();
-        }
-        element._datepickr = new datepickr.init(element, config);
-        return element._datepickr;
+  this.init = function () {
+    if (this.theInput.value) {
+      this.selectedDate = new Date(this.theInput.value);
+    }
+    this.createCal();
+  };
+
+  //create the calendar html and events
+  this.createCal = function () {
+
+    //creating a container div around the input, the calendar will also be there
+    this.container = document.createElement('div');
+    this.container.className = 'calanderContainer';
+    this.container.style.display = 'inline-block';
+    this.theInput.parentNode.replaceChild(this.container, this.theInput);
+    this.container.appendChild(this.theInput);
+
+    //the calendar itself
+    this.theCalDiv = document.createElement('div');
+    this.theCalDiv.className = 'calander';
+    this.theCalDiv.style.display = 'none';
+    this.container.appendChild(this.theCalDiv);
+
+    //the year selector inside the calendar
+    var yearSelect = this.createRangeSelect(this.selectedDate.getFullYear() - 80, this.selectedDate.getFullYear() + 20, this.selectedDate.getFullYear());
+    this.theCalDiv.appendChild(yearSelect);
+    yearSelect.onchange = function () {
+      self.selectedDate.setYear(this.value);
+      self.selectDate();
+      self.createMonthTable();
+      self.theInput.focus();
     };
 
-    if (selector.nodeName) {
-        return createInstance(selector);
-    }
-
-    elements = datepickr.prototype.querySelectorAll(selector);
-
-    if (elements.length === 1) {
-        return createInstance(elements[0]);
-    }
-
-    for (i = 0; i < elements.length; i++) {
-        instances.push(createInstance(elements[i]));
-    }
-    return instances;
-};
-
-/**
- * @constructor
- */
-datepickr.init = function (element, instanceConfig) {
-    'use strict';
-    var self = this,
-        defaultConfig = {
-            dateFormat: 'F j, Y',
-            altFormat: null,
-            altInput: null,
-            minDate: null,
-            maxDate: null,
-            shorthandCurrentMonth: false
-        },
-        calendarContainer = document.createElement('div'),
-        navigationCurrentMonth = document.createElement('span'),
-        calendar = document.createElement('table'),
-        calendarBody = document.createElement('tbody'),
-        wrapperElement,
-        currentDate = new Date(),
-        wrap,
-        date,
-        formatDate,
-        monthToStr,
-        isSpecificDay,
-        buildWeekdays,
-        buildDays,
-        updateNavigationCurrentMonth,
-        buildMonthNavigation,
-        handleYearChange,
-        documentClick,
-        calendarClick,
-        buildCalendar,
-        bind,
-        open,
-        close,
-        destroy,
-        init;
-
-    calendarContainer.className = 'datepickr-calendar';
-    navigationCurrentMonth.className = 'datepickr-current-month';
-    instanceConfig = instanceConfig || {};
-
-    wrap = function () {
-        wrapperElement = document.createElement('div');
-        wrapperElement.className = 'datepickr-wrapper';
-        self.element.parentNode.insertBefore(wrapperElement, self.element);
-        wrapperElement.appendChild(self.element);
+    //the month selector inside the calendar
+    var monthsNames = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+    var monthSelect = this.createRangeSelect(0, 11, this.selectedDate.getMonth(), monthsNames);
+    this.theCalDiv.appendChild(monthSelect);
+    monthSelect.onchange = function () {
+      self.selectedDate.setMonth(this.value);
+      self.selectDate();
+      self.createMonthTable();
+      self.theInput.focus();
     };
 
-    date = {
-        current: {
-            year: function () {
-                return currentDate.getFullYear();
-            },
-            month: {
-                integer: function () {
-                    return currentDate.getMonth();
-                },
-                string: function (shorthand) {
-                    var month = currentDate.getMonth();
-                    return monthToStr(month, shorthand);
-                }
-            },
-            day: function () {
-                return currentDate.getDate();
-            }
-        },
-        month: {
-            string: function () {
-                return monthToStr(self.currentMonthView, self.config.shorthandCurrentMonth);
-            },
-            numDays: function () {
-                // checks to see if february is a leap year otherwise return the respective # of days
-                return self.currentMonthView === 1 && (((self.currentYearView % 4 === 0) && (self.currentYearView % 100 !== 0)) || (self.currentYearView % 400 === 0)) ? 29 : self.l10n.daysInMonth[self.currentMonthView];
-            }
-        }
-    };
+    //the days table inside the calendar
+    this.createMonthTable();
 
-    formatDate = function (dateFormat, milliseconds) {
-        var formattedDate = '',
-            dateObj = new Date(milliseconds),
-            formats = {
-                d: function () {
-                    var day = formats.j();
-                    return (day < 10) ? '0' + day : day;
-                },
-                D: function () {
-                    return self.l10n.weekdays.shorthand[formats.w()];
-                },
-                j: function () {
-                    return dateObj.getDate();
-                },
-                l: function () {
-                    return self.l10n.weekdays.longhand[formats.w()];
-                },
-                w: function () {
-                    return dateObj.getDay();
-                },
-                F: function () {
-                    return monthToStr(formats.n() - 1, false);
-                },
-                m: function () {
-                    var month = formats.n();
-                    return (month < 10) ? '0' + month : month;
-                },
-                M: function () {
-                    return monthToStr(formats.n() - 1, true);
-                },
-                n: function () {
-                    return dateObj.getMonth() + 1;
-                },
-                U: function () {
-                    return dateObj.getTime() / 1000;
-                },
-                y: function () {
-                    return String(formats.Y()).substring(2);
-                },
-                Y: function () {
-                    return dateObj.getFullYear();
-                }
-            },
-            formatPieces = dateFormat.split('');
+    //open the calendar when the input get focus
+    this.theInput.addEventListener('focus', function () {
+      self.theCalDiv.style.display = '';
+    });
 
-        self.forEach(formatPieces, function (formatPiece, index) {
-            if (formats[formatPiece] && formatPieces[index - 1] !== '\\') {
-                formattedDate += formats[formatPiece]();
-            } else {
-                if (formatPiece !== '\\') {
-                    formattedDate += formatPiece;
-                }
-            }
+    //close the calendar when clicking outside of the input or calendar
+    document.addEventListener('click', function (e) {
+      if (e.target.parentNode !== self.container &&
+        e.target.parentNode.parentNode !== self.container
+      ) {
+        self.theCalDiv.style.display = 'none';
+      }
+    });
+  };
+
+  this.createMonthTable = function () {
+    var year = this.selectedDate.getFullYear(); //get the year (2015)
+    var month = this.selectedDate.getMonth(); //get the month number (0-11)
+    var startDay = new Date(year, month, 1).getDay(); //first weekday of month (0-6)
+    var maxDays = new Date(this.selectedDate.getFullYear(), month + 1, 0).getDate(); //get days in month (1-31)
+
+    //if there was a table before, remove it
+    var oldTables = this.theCalDiv.getElementsByTagName('table');
+    if (oldTables.length > 0) {
+      this.theCalDiv.removeChild(oldTables[0]);
+    }
+
+    //the table and header for the month days
+    var theTable = document.createElement('table');
+    theTable.innerHTML = '<tr><th>Sun</th><th>Mon</th><th>Tue</th><th>Wed</th><th>Thu</th><th>Fri</th><th>Sat</th></tr>';
+    this.theCalDiv.appendChild(theTable);
+
+    //create the days cols according to the selected month days
+    var aRow;
+    var aCell;
+    for (var cellNum = 0; cellNum < maxDays + startDay; cellNum++) {
+
+      //crate a table row in the begining and after each 7 cells
+      if (cellNum % 7 === 0) {
+        aRow = theTable.insertRow(-1);
+      }
+
+      aCell = aRow.insertCell(-1);
+
+      if (cellNum + 1 > startDay) {
+        aCell.innerHTML = cellNum + 1 - startDay;
+        aCell.addEventListener('click', function () {
+          self.selectedDate.setDate(parseInt(this.innerHTML));
+          self.selectDate();
         });
-
-        return formattedDate;
-    };
-
-    monthToStr = function (date, shorthand) {
-        if (shorthand === true) {
-            return self.l10n.months.shorthand[date];
-        }
-
-        return self.l10n.months.longhand[date];
-    };
-
-    isSpecificDay = function (day, month, year, comparison) {
-        return day === comparison && self.currentMonthView === month && self.currentYearView === year;
-    };
-
-    buildWeekdays = function () {
-        var weekdayContainer = document.createElement('thead'),
-            firstDayOfWeek = self.l10n.firstDayOfWeek,
-            weekdays = self.l10n.weekdays.shorthand;
-
-        if (firstDayOfWeek > 0 && firstDayOfWeek < weekdays.length) {
-            weekdays = [].concat(weekdays.splice(firstDayOfWeek, weekdays.length), weekdays.splice(0, firstDayOfWeek));
-        }
-
-        weekdayContainer.innerHTML = '<tr><th>' + weekdays.join('</th><th>') + '</th></tr>';
-        calendar.appendChild(weekdayContainer);
-    };
-
-    buildDays = function () {
-        var firstOfMonth = new Date(self.currentYearView, self.currentMonthView, 1).getDay(),
-            numDays = date.month.numDays(),
-            calendarFragment = document.createDocumentFragment(),
-            row = document.createElement('tr'),
-            dayCount,
-            dayNumber,
-            today = '',
-            selected = '',
-            disabled = '',
-            currentTimestamp;
-
-        // Offset the first day by the specified amount
-        firstOfMonth -= self.l10n.firstDayOfWeek;
-        if (firstOfMonth < 0) {
-            firstOfMonth += 7;
-        }
-
-        dayCount = firstOfMonth;
-        calendarBody.innerHTML = '';
-
-        // Add spacer to line up the first day of the month correctly
-        if (firstOfMonth > 0) {
-            row.innerHTML += '<td colspan="' + firstOfMonth + '">&nbsp;</td>';
-        }
-
-        // Start at 1 since there is no 0th day
-        for (dayNumber = 1; dayNumber <= numDays; dayNumber++) {
-            // if we have reached the end of a week, wrap to the next line
-            if (dayCount === 7) {
-                calendarFragment.appendChild(row);
-                row = document.createElement('tr');
-                dayCount = 0;
-            }
-
-            today = isSpecificDay(date.current.day(), date.current.month.integer(), date.current.year(), dayNumber) ? ' today' : '';
-            if (self.selectedDate) {
-                selected = isSpecificDay(self.selectedDate.day, self.selectedDate.month, self.selectedDate.year, dayNumber) ? ' selected' : '';
-            }
-
-            if (self.config.minDate || self.config.maxDate) {
-                currentTimestamp = new Date(self.currentYearView, self.currentMonthView, dayNumber).getTime();
-                disabled = '';
-
-                if (self.config.minDate && currentTimestamp < self.config.minDate) {
-                    disabled = ' disabled';
-                }
-
-                if (self.config.maxDate && currentTimestamp > self.config.maxDate) {
-                    disabled = ' disabled';
-                }
-            }
-
-            row.innerHTML += '<td class="' + today + selected + disabled + '"><span class="datepickr-day">' + dayNumber + '</span></td>';
-            dayCount++;
-        }
-
-        calendarFragment.appendChild(row);
-        calendarBody.appendChild(calendarFragment);
-    };
-
-    updateNavigationCurrentMonth = function () {
-        navigationCurrentMonth.innerHTML = date.month.string() + ' ' + self.currentYearView;
-    };
-
-    buildMonthNavigation = function () {
-        var months = document.createElement('div'),
-            monthNavigation;
-
-        monthNavigation  = '<span class="datepickr-prev-month">&lt;</span>';
-        monthNavigation += '<span class="datepickr-next-month">&gt;</span>';
-
-        months.className = 'datepickr-months';
-        months.innerHTML = monthNavigation;
-
-        months.appendChild(navigationCurrentMonth);
-        updateNavigationCurrentMonth();
-        calendarContainer.appendChild(months);
-    };
-
-    handleYearChange = function () {
-        if (self.currentMonthView < 0) {
-            self.currentYearView--;
-            self.currentMonthView = 11;
-        }
-
-        if (self.currentMonthView > 11) {
-            self.currentYearView++;
-            self.currentMonthView = 0;
-        }
-    };
-
-    documentClick = function (event) {
-        var parent;
-        if (event.target !== self.element && event.target !== wrapperElement) {
-            parent = event.target.parentNode;
-            if (parent !== wrapperElement) {
-                while (parent !== wrapperElement) {
-                    parent = parent.parentNode;
-                    if (parent === null) {
-                        close();
-                        break;
-                    }
-                }
-            }
-        }
-    };
-
-    calendarClick = function (event) {
-        var target = event.target,
-            targetClass = target.className,
-            currentTimestamp;
-
-        if (targetClass) {
-            if (targetClass === 'datepickr-prev-month' || targetClass === 'datepickr-next-month') {
-                if (targetClass === 'datepickr-prev-month') {
-                    self.currentMonthView--;
-                } else {
-                    self.currentMonthView++;
-                }
-
-                handleYearChange();
-                updateNavigationCurrentMonth();
-                buildDays();
-            } else if (targetClass === 'datepickr-day' && !self.hasClass(target.parentNode, 'disabled')) {
-                self.selectedDate = {
-                    day: parseInt(target.innerHTML, 10),
-                    month: self.currentMonthView,
-                    year: self.currentYearView
-                };
-
-                currentTimestamp = new Date(self.currentYearView, self.currentMonthView, self.selectedDate.day).getTime();
-
-                if (self.config.altInput) {
-                    if (self.config.altFormat) {
-                        self.config.altInput.value = formatDate(self.config.altFormat, currentTimestamp);
-                    } else {
-                        // I don't know why someone would want to do this... but just in case?
-                        self.config.altInput.value = formatDate(self.config.dateFormat, currentTimestamp);
-                    }
-                }
-
-                self.element.value = formatDate(self.config.dateFormat, currentTimestamp);
-
-                //added by lior wohl so angular will see the change in the date
-                var fakeEvent = document.createEvent('KeyboardEvent');
-                fakeEvent.initEvent('keyup', true, true, window, false, false, false, false, 38, 38);
-                target.dispatchEvent(fakeEvent); 
-
-                close();
-                buildDays();
-            }
-        }
-    };
-
-    buildCalendar = function () {
-        buildMonthNavigation();
-        buildWeekdays();
-        buildDays();
-
-        calendar.appendChild(calendarBody);
-        calendarContainer.appendChild(calendar);
-
-        wrapperElement.appendChild(calendarContainer);
-    };
-
-    bind = function () {
-        var openEvent = 'click';
-
-        if (self.element.nodeName === 'INPUT') {
-            openEvent = 'focus';
-            //self.addEventListener(self.element, 'blur', close, false); //commented by lior wohl to allow changing months
-        }
-
-        self.addEventListener(self.element, openEvent, open, false);
-        self.addEventListener(calendarContainer, 'mousedown', calendarClick, false);
-    };
-
-    open = function () {
-        self.addEventListener(document, 'click', documentClick, false);
-        self.addClass(wrapperElement, 'open');
-    };
-
-    close = function () {
-        self.removeEventListener(document, 'click', documentClick, false);
-        self.removeClass(wrapperElement, 'open');
-    };
-
-    destroy = function () {
-        var parent,
-            element;
-
-        self.removeEventListener(document, 'click', documentClick, false);
-        self.removeEventListener(self.element, 'focus', open, false);
-        self.removeEventListener(self.element, 'blur', close, false);
-        self.removeEventListener(self.element, 'click', open, false);
-
-        parent = self.element.parentNode;
-        parent.removeChild(calendarContainer);
-        element = parent.removeChild(self.element);
-        parent.parentNode.replaceChild(element, parent);
-    };
-
-    init = function () {
-        var config,
-            parsedDate;
-
-        self.config = {};
-        self.destroy = destroy;
-
-        for (config in defaultConfig) {
-            self.config[config] = instanceConfig[config] || defaultConfig[config];
-        }
-
-        self.element = element;
-
-        if (self.element.value) {
-            parsedDate = Date.parse(self.element.value);
-        }
-
-        if (parsedDate && !isNaN(parsedDate)) {
-            parsedDate = new Date(parsedDate);
-            self.selectedDate = {
-                day: parsedDate.getDate(),
-                month: parsedDate.getMonth(),
-                year: parsedDate.getFullYear()
-            };
-            self.currentYearView = self.selectedDate.year;
-            self.currentMonthView = self.selectedDate.month;
-            self.currentDayView = self.selectedDate.day;
-        } else {
-            self.selectedDate = null;
-            self.currentYearView = date.current.year();
-            self.currentMonthView = date.current.month.integer();
-            self.currentDayView = date.current.day();
-        }
-
-        wrap();
-        buildCalendar();
-        bind();
-    };
-
-    init();
-
-    return self;
-};
-
-datepickr.init.prototype = {
-    hasClass: function (element, className) { return element.classList.contains(className); },
-    addClass: function (element, className) { element.classList.add(className); },
-    removeClass: function (element, className) { element.classList.remove(className); },
-    forEach: function (items, callback) { [].forEach.call(items, callback); },
-    querySelectorAll: document.querySelectorAll.bind(document),
-    isArray: Array.isArray,
-    addEventListener: function (element, type, listener, useCapture) {
-        element.addEventListener(type, listener, useCapture);
-    },
-    removeEventListener: function (element, type, listener, useCapture) {
-        element.removeEventListener(type, listener, useCapture);
-    },
-    l10n: {
-        weekdays: {
-            shorthand: ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'],
-            longhand: ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday']
-        },
-        months: {
-            shorthand: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
-            longhand: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December']
-        },
-        daysInMonth: [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31],
-        firstDayOfWeek: 0
+      }
     }
-};
+  };
 
-//my addition
+  //copy the selected date to the input field
+  this.selectDate = function () {
 
-//check if not mobile
+    var monthText = this.selectedDate.getMonth() + 1;
+    if (monthText < 10) {
+      monthText = '0' + monthText;
+    }
+
+    var dayText = this.selectedDate.getDate();
+    if (dayText < 10) {
+      dayText = '0' + dayText;
+    }
+
+    this.theInput.value = '' + this.selectedDate.getFullYear() + '-' + monthText + '-' + dayText + '';
+  };
+
+  //helper function to create html select tags
+  this.createRangeSelect = function (min, max, selected, namesArray) {
+    var aOption;
+    var curNum;
+    var theText;
+
+    var theSelect = document.createElement('select');
+
+    for (curNum = min; curNum <= max; curNum++) {
+      aOption = document.createElement('option');
+      theSelect.appendChild(aOption);
+
+      if (namesArray) {
+        theText = namesArray[curNum - min];
+      } else {
+        theText = curNum;
+      }
+
+      aOption.text = theText;
+      aOption.value = curNum;
+
+      if (curNum === selected) {
+        aOption.selected = true;
+      }
+    };
+
+    return theSelect;
+  }
+
+  this.init();
+}
+
+//run the above code on any <input type='date'> in the document, also on dynamically created ones 
+//check if not mobile, they have built-in support for type='date'
 if (typeof window.orientation === 'undefined') {
   //this is on mousedown event so it will capture new inputs that might joined to the dom
   document.querySelector('body').addEventListener('mousedown', function (event) {
-    //get and loop all the input[type=date]s
-    var dateInputs = document.querySelectorAll('input[type=date]');
+    //get and loop all the new input[type=date]s
+    var dateInputs = document.querySelectorAll('input[type=date]:not(.havCal)');
     [].forEach.call(dateInputs, function (dateInput) { 
       //call datepickr function on the input
-      datepickr(dateInput, { dateFormat: 'Y-m-d' });
-      //make it normal "text" input from now on
-      dateInput.type = "text";
+      new calanderExtender(dateInput);
+      //mark that it have calendar
+      dateInput.classList.add('havCal');
     });
   });
 }
