@@ -10,3 +10,6 @@
 .calander td {
   cursor: pointer;
 }
+.calander .selected {
+  font-weight: bold;
+}
