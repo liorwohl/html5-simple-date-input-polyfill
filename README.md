@@ -3,6 +3,8 @@ Just include this simple script and IE (>=10) and Firefox will support &lt;input
 
 Support dynamically created inputs, so can be used in single page applications.
 
+Support AngularJS (and possibly other libraries) bindings.
+
 # Install
 npm install git://github.com/liorwohl/html5-simple-date-input-polyfill --save --force
 
