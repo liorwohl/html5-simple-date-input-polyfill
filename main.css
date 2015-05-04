@@ -6,6 +6,8 @@
 }
 .calander select {
   margin: 3px 5px;
+  height: auto;
+  padding: 0;
 }
 .calander table, .calander th, .calander td {
   padding: 0;
@@ -16,6 +18,8 @@
 }
 .calander th, .calander td {
   width: 14%;
+  padding: 4px;
+  text-align: center;
 }
 .calander td {
   cursor: pointer;
