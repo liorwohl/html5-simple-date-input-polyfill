@@ -8,5 +8,5 @@ npm install git://github.com/liorwohl/html5-simple-date-input-polyfill --save --
 
 then add to your JS (if using browserify): require('html5-simple-date-input-polyfill'); 
 
-and to your SCSS: @import "../node_modules/html5-simple-date-input-polyfill/main.css";
+and to your SCSS: @import "../node_modules/html5-simple-date-input-polyfill/main.scss";
 (or just copy and edit the CSS, its a very short code)

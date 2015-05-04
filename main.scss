@@ -1,0 +1,34 @@
+.calander {
+  position: absolute;
+  background: #fff;
+  border: 1px solid #c0c0c0;
+  text-align: center;
+
+  select {
+    margin: 3px 5px;
+    height: auto;
+    padding: 0;
+  }
+
+  table, th, td {
+    padding: 0;
+    margin: 0;
+    line-height: normal;
+    border: 0;
+    background: none;
+  }
+
+  th, td {
+    width: 14%;
+    padding: 4px;
+    text-align: center;
+  }
+
+  td {
+    cursor: pointer;
+  }
+  
+  .selected {
+    font-weight: bold;
+  }
+}
