@@ -4,6 +4,16 @@
   border: 1px solid #c0c0c0;
   text-align: center;
 }
+.calander select {
+  margin: 3px 5px;
+}
+.calander table, .calander th, .calander td {
+  padding: 0;
+  margin: 0;
+  line-height: normal;
+  border: 0;
+  background: none;
+}
 .calander th, .calander td {
   width: 14%;
 }
