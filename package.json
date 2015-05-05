@@ -1,6 +1,6 @@
 ﻿{
   "name": "html5-simple-date-input-polyfill",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "input type date polyfill",
   "main": "main.js",
   "author": {
@@ -9,7 +9,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/liorwohl/html5-simple-date-input-polyfill.git"
+    "url": "git://github.com/liorwohl/html5-simple-date-input-polyfill.git"
   },
   "bugs": "https://github.com/liorwohl/html5-simple-date-input-polyfill/issues",
   "keywords": ["html5","date","datepicker","type"],
