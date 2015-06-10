@@ -1,6 +1,6 @@
 ﻿{
   "name": "html5-simple-date-input-polyfill",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "input type date polyfill",
   "main": "main.js",
   "author": {
