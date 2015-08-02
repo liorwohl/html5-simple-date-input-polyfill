@@ -45,13 +45,10 @@ function calanderExtender (theInput) {
     //the days table inside the calendar
     this.createMonthTable();
 
-    //open the calendar when the input get focus
-    this.theInput.addEventListener('focus', function () {
-      self.theCalDiv.style.display = ''; //block
-    });
-    this.theInput.addEventListener('click', function () {
-      self.theCalDiv.style.display = ''; //block
-    });
+    //open the calendar when the input get focus, also on various click events to capture it in all corner cases
+    this.theInput.addEventListener('focus', function () { self.theCalDiv.style.display = ''; });
+    this.theInput.addEventListener('mouseup', function () { self.theCalDiv.style.display = ''; });
+    this.theInput.addEventListener('mousedown', function () { self.theCalDiv.style.display = ''; });
 
     //update the calendar if the date changed manually in the input
     this.theInput.addEventListener('keyup', function () {
@@ -210,6 +207,7 @@ function calanderExtender (theInput) {
   this.init();
 }
 
+//return false if the browser dont support input[type=date]
 function checkDateInputSupport () {
   var input = document.createElement('input');
   input.setAttribute('type','date');
@@ -220,18 +218,24 @@ function checkDateInputSupport () {
   return !(input.value === notADateValue);
 }
 
+//will add the calanderExtender to all inputs in the page
+function addCalanderExtenderToDateInputs () {
+  //get and loop all the input[type=date]s in the page that dont have "haveCal" class yet
+  var dateInputs = document.querySelectorAll('input[type=date]:not(.haveCal)');
+  [].forEach.call(dateInputs, function (dateInput) {
+    //call calanderExtender function on the input
+    new calanderExtender(dateInput);
+    //mark that it have calendar
+    dateInput.classList.add('haveCal');
+  });
+}
+
 //run the above code on any <input type='date'> in the document, also on dynamically created ones 
 //check if type=date is supported or if not mobile, they have built-in support for type='date'
 if (!checkDateInputSupport() && typeof window.orientation === 'undefined') {
-  //this is on mousedown event so it will capture new inputs that might joined to the dom
+  addCalanderExtenderToDateInputs();
+  //this is also on mousedown event so it will capture new inputs that might joined to the dom dynamically
   document.querySelector('body').addEventListener('mousedown', function (event) {
-    //get and loop all the new input[type=date]s
-    var dateInputs = document.querySelectorAll('input[type=date]:not(.haveCal)');
-    [].forEach.call(dateInputs, function (dateInput) { 
-      //call datepickr function on the input
-      new calanderExtender(dateInput);
-      //mark that it have calendar
-      dateInput.classList.add('haveCal');
-    });
+    addCalanderExtenderToDateInputs();
   });
 }
