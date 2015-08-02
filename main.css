@@ -1,4 +1,8 @@
-@mixin reset() {
+.calander, 
+.calander select,
+.calander table, 
+.calander th, 
+.calander td {
   background: #fff;
   color: #000;
   text-shadow: none;
@@ -14,30 +18,26 @@
 }
 
 .calander {
-  &, select, table, th, td {
-    @include reset();
-  }
-
   position: absolute;
   border: 1px solid #c0c0c0;
   text-align: center;
-  
-  select {  
-    margin: 3px 5px;
-    border: 1px solid #c0c0c0;
-  }
+}
 
-  th, td {
-    width: 14%;
-    padding: 4px;
-    text-align: center;
-  }
+.calander select {  
+  margin: 3px 5px;
+  border: 1px solid #c0c0c0;
+}
 
-  td {
-    cursor: pointer;
-  }
+.calander th, .calander td {
+  width: 14%;
+  padding: 4px;
+  text-align: center;
+}
+
+.calander td {
+  cursor: pointer;
+}
   
-  .selected {
-    font-weight: bold;
-  }
+.calander .selected {
+  font-weight: bold;
 }
