@@ -16,7 +16,7 @@ function calanderExtender (theInput) {
   this.getDateFromInput = function () {
     if (this.theInput.value) {
       var possibleNewDate = new Date(this.theInput.value);
-      if (possibleNewDate.toDateString() !== this.selectedDate.toDateString()) {
+      if (Date.parse(this.theInput.value) && possibleNewDate.toDateString() !== this.selectedDate.toDateString()) {
         this.selectedDate = possibleNewDate;
         return true;
       }
