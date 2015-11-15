@@ -1,8 +1,8 @@
 ﻿{
   "name": "html5-simple-date-input-polyfill",
-  "version": "1.0.3",
+  "version": "1.1",
   "description": "input type date polyfill",
-  "main": "main.js",
+  "main": "html5-simple-date-input-polyfill.js",
   "author": {
     "name": "Lior Wohl",
     "email": "liorwohl@gmail.com"
