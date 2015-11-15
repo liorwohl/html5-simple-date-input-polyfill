@@ -9,6 +9,7 @@ Support AngularJS (and possibly other libraries) bindings.
 npm install html5-simple-date-input-polyfill --save
 
 then add to your JS (if using browserify): require('html5-simple-date-input-polyfill'); 
+(Or with &lt;script src="html5-simple-date-input-polyfill.min.js"></script>)
 
 and to your SCSS: @import "../node_modules/html5-simple-date-input-polyfill/html5-simple-date-input-polyfill.scss";
 (or just copy and edit the CSS, its a very short code)
