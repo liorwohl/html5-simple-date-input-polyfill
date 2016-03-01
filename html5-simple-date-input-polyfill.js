@@ -15,8 +15,9 @@ function calanderExtender (theInput) {
   //update selectedDate with the date from the input, return true if changed
   this.getDateFromInput = function () {
     if (this.theInput.value) {
-      var possibleNewDate = new Date(this.theInput.value);
-      if (Date.parse(this.theInput.value) && possibleNewDate.toDateString() !== this.selectedDate.toDateString()) {
+      var timeAdd = ~this.theInput.value.indexOf('T') ? '' : 'T00:00:00';
+      var possibleNewDate = new Date(this.theInput.value+timeAdd);
+      if (Date.parse(this.theInput.value+timeAdd) && possibleNewDate.toDateString() !== this.selectedDate.toDateString()) {
         this.selectedDate = possibleNewDate;
         return true;
       }
@@ -60,7 +61,7 @@ function calanderExtender (theInput) {
     //close the calendar when clicking outside of the input or calendar
     document.addEventListener('click', function (e) {
       if (e.target.parentNode !== self.container &&
-          e.target.parentNode.parentNode !== self.container && 
+          e.target.parentNode.parentNode !== self.container &&
           e.target.parentNode.parentNode !== self.theCalDiv
       ) {
         self.theCalDiv.style.display = 'none';
@@ -213,7 +214,7 @@ function checkDateInputSupport () {
   input.setAttribute('type','date');
 
   var notADateValue = 'not-a-date';
-  input.setAttribute('value', notADateValue); 
+  input.setAttribute('value', notADateValue);
 
   return !(input.value === notADateValue);
 }
@@ -230,7 +231,7 @@ function addCalanderExtenderToDateInputs () {
   });
 }
 
-//run the above code on any <input type='date'> in the document, also on dynamically created ones 
+//run the above code on any <input type='date'> in the document, also on dynamically created ones
 //check if type=date is supported or if not mobile, they have built-in support for type='date'
 if (!checkDateInputSupport() && typeof window.orientation === 'undefined') {
   addCalanderExtenderToDateInputs();
