@@ -1,15 +1,15 @@
-function calanderExtender (theInput) {
+function pickerExtender (theInput) {
 
   var self = this;
 
   this.theInput = theInput;
   this.container = null;
-  this.theCalDiv = null;
+  this.thePickerDiv = null;
   this.selectedDate = new Date();
 
   this.init = function () {
     this.getDateFromInput();
-    this.createCal();
+    this.createPicker();
   };
 
   //update selectedDate with the date from the input, return true if changed
@@ -25,56 +25,56 @@ function calanderExtender (theInput) {
     return false;
   };
 
-  //create the calendar html and events
-  this.createCal = function () {
-    //creating a container div around the input, the calendar will also be there
+  //create the picker html and events
+  this.createPicker = function () {
+    //creating a container div around the input, the picker will also be there
     this.container = document.createElement('div');
-    this.container.className = 'calanderContainer';
+    this.container.className = 'pickerContainer';
     this.container.style.display = 'inline-block';
     this.theInput.parentNode.replaceChild(this.container, this.theInput);
     this.container.appendChild(this.theInput);
 
-    //the calendar div
-    this.theCalDiv = document.createElement('div');
-    this.theCalDiv.className = 'calander';
-    this.theCalDiv.style.display = 'none';
-    this.container.appendChild(this.theCalDiv);
+    //the picker div
+    this.thePickerDiv = document.createElement('div');
+    this.thePickerDiv.className = 'picker';
+    this.thePickerDiv.style.display = 'none';
+    this.container.appendChild(this.thePickerDiv);
 
-    //the year and month selects inside the calendar
+    //the year and month selects inside the picker
     this.creathYearAndMonthSelects();
 
-    //the days table inside the calendar
+    //the days table inside the picker
     this.createMonthTable();
 
-    //open the calendar when the input get focus, also on various click events to capture it in all corner cases
-    this.theInput.addEventListener('focus', function () { self.theCalDiv.style.display = ''; });
-    this.theInput.addEventListener('mouseup', function () { self.theCalDiv.style.display = ''; });
-    this.theInput.addEventListener('mousedown', function () { self.theCalDiv.style.display = ''; });
+    //open the picker when the input get focus, also on various click events to capture it in all corner cases
+    this.theInput.addEventListener('focus', function () { self.thePickerDiv.style.display = ''; });
+    this.theInput.addEventListener('mouseup', function () { self.thePickerDiv.style.display = ''; });
+    this.theInput.addEventListener('mousedown', function () { self.thePickerDiv.style.display = ''; });
 
-    //update the calendar if the date changed manually in the input
+    //update the picker if the date changed manually in the input
     this.theInput.addEventListener('keyup', function () {
       if (self.getDateFromInput()) {
         self.updateSelecteds();
       }
     });
 
-    //close the calendar when clicking outside of the input or calendar
+    //close the picker when clicking outside of the input or picker
     document.addEventListener('click', function (e) {
       if (e.target.parentNode !== self.container &&
           e.target.parentNode.parentNode !== self.container &&
-          e.target.parentNode.parentNode !== self.theCalDiv
+          e.target.parentNode.parentNode !== self.thePickerDiv
       ) {
-        self.theCalDiv.style.display = 'none';
+        self.thePickerDiv.style.display = 'none';
       }
     });
   };
 
   //create the year and month selects html
   this.creathYearAndMonthSelects = function () {
-    //the year selector inside the calendar
+    //the year selector inside the picker
     var yearSelect = this.createRangeSelect(new Date().getFullYear() - 80, new Date().getFullYear() + 20, this.selectedDate.getFullYear());
     yearSelect.className = 'yearSelect';
-    this.theCalDiv.appendChild(yearSelect);
+    this.thePickerDiv.appendChild(yearSelect);
     yearSelect.onchange = function () {
       self.selectedDate.setYear(this.value);
       self.selectDate();
@@ -82,11 +82,11 @@ function calanderExtender (theInput) {
       self.theInput.focus();
     };
 
-    //the month selector inside the calendar
+    //the month selector inside the picker
     var monthsNames = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
     var monthSelect = this.createRangeSelect(0, 11, this.selectedDate.getMonth(), monthsNames);
     monthSelect.className = 'monthSelect';
-    this.theCalDiv.appendChild(monthSelect);
+    this.thePickerDiv.appendChild(monthSelect);
     monthSelect.onchange = function () {
       self.selectedDate.setMonth(this.value);
       self.selectDate();
@@ -97,8 +97,8 @@ function calanderExtender (theInput) {
 
   //update the year and month selects with the right selected value (if date changed externally)
   this.updateSelecteds = function () {
-    this.theCalDiv.querySelector('.yearSelect').value  = this.selectedDate.getFullYear();
-    this.theCalDiv.querySelector('.monthSelect').value = this.selectedDate.getMonth();
+    this.thePickerDiv.querySelector('.yearSelect').value  = this.selectedDate.getFullYear();
+    this.thePickerDiv.querySelector('.monthSelect').value = this.selectedDate.getMonth();
     this.createMonthTable();
   };
 
@@ -110,15 +110,15 @@ function calanderExtender (theInput) {
     var maxDays = new Date(this.selectedDate.getFullYear(), month + 1, 0).getDate(); //get days in month (1-31)
 
     //if there was a table before, remove it
-    var oldTables = this.theCalDiv.getElementsByTagName('table');
+    var oldTables = this.thePickerDiv.getElementsByTagName('table');
     if (oldTables.length > 0) {
-      this.theCalDiv.removeChild(oldTables[0]);
+      this.thePickerDiv.removeChild(oldTables[0]);
     }
 
     //the table and header for the month days
     var theTable = document.createElement('table');
     theTable.innerHTML = '<tr><th>Sun</th><th>Mon</th><th>Tue</th><th>Wed</th><th>Thu</th><th>Fri</th><th>Sat</th></tr>';
-    this.theCalDiv.appendChild(theTable);
+    this.thePickerDiv.appendChild(theTable);
 
     //create the days cols according to the selected month days
     var aRow;
@@ -144,7 +144,7 @@ function calanderExtender (theInput) {
         aCell.addEventListener('click', function () {
 
           //mark the dey with 'selected' css class
-          self.theCalDiv.querySelector('.selected').className = '';
+          self.thePickerDiv.querySelector('.selected').className = '';
           this.className = 'selected';
 
           self.selectedDate.setDate(parseInt(this.innerHTML));
@@ -219,24 +219,24 @@ function checkDateInputSupport () {
   return !(input.value === notADateValue);
 }
 
-//will add the calanderExtender to all inputs in the page
-function addCalanderExtenderToDateInputs () {
-  //get and loop all the input[type=date]s in the page that dont have "haveCal" class yet
-  var dateInputs = document.querySelectorAll('input[type=date]:not(.haveCal)');
+//will add the pickerExtender to all inputs in the page
+function addPickerExtenderToDateInputs () {
+  //get and loop all the input[type=date]s in the page that dont have "hasPicker" class yet
+  var dateInputs = document.querySelectorAll('input[type=date]:not(.hasPicker)');
   [].forEach.call(dateInputs, function (dateInput) {
-    //call calanderExtender function on the input
-    new calanderExtender(dateInput);
-    //mark that it have calendar
-    dateInput.classList.add('haveCal');
+    //call pickerExtender function on the input
+    new pickerExtender(dateInput);
+    //mark that it have picker
+    dateInput.classList.add('hasPicker');
   });
 }
 
 //run the above code on any <input type='date'> in the document, also on dynamically created ones
 //check if type=date is supported or if not mobile, they have built-in support for type='date'
 if (!checkDateInputSupport() && typeof window.orientation === 'undefined') {
-  addCalanderExtenderToDateInputs();
+  addPickerExtenderToDateInputs();
   //this is also on mousedown event so it will capture new inputs that might joined to the dom dynamically
   document.querySelector('body').addEventListener('mousedown', function (event) {
-    addCalanderExtenderToDateInputs();
+    addPickerExtenderToDateInputs();
   });
 }

@@ -6,7 +6,7 @@ Support dynamically created inputs, so can be used in single page applications.
 Support AngularJS (and possibly other libraries) bindings.
 
 # Install
-npm install html5-simple-date-input-polyfill --save
+`npm install --save html5-simple-date-input-polyfill`
 
 then add to your JS (if using browserify): require('html5-simple-date-input-polyfill'); 
 (Or with &lt;script src="html5-simple-date-input-polyfill.min.js"></script>)

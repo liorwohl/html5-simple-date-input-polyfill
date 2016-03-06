@@ -1,8 +1,8 @@
-.calander, 
-.calander select,
-.calander table, 
-.calander th, 
-.calander td {
+.picker, 
+.picker select,
+.picker table, 
+.picker th, 
+.picker td {
   background: #fff;
   color: #000;
   text-shadow: none;
@@ -17,27 +17,27 @@
   font-size: 14px;
 }
 
-.calander {
+.picker {
   position: absolute;
   border: 1px solid #c0c0c0;
   text-align: center;
 }
 
-.calander select {  
+.picker select {  
   margin: 3px 5px;
   border: 1px solid #c0c0c0;
 }
 
-.calander th, .calander td {
+.picker th, .picker td {
   width: 14%;
   padding: 4px;
   text-align: center;
 }
 
-.calander td {
+.picker td {
   cursor: pointer;
 }
   
-.calander .selected {
+.picker .selected {
   font-weight: bold;
 }
