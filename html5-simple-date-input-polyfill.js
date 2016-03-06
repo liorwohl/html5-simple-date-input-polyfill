@@ -41,7 +41,7 @@ function pickerExtender (theInput) {
     this.container.appendChild(this.thePickerDiv);
 
     //the year and month selects inside the picker
-    this.creathYearAndMonthSelects();
+    this.createYearAndMonthSelects();
 
     //the days table inside the picker
     this.createMonthTable();
@@ -70,7 +70,7 @@ function pickerExtender (theInput) {
   };
 
   //create the year and month selects html
-  this.creathYearAndMonthSelects = function () {
+  this.createYearAndMonthSelects = function () {
     //the year selector inside the picker
     var yearSelect = this.createRangeSelect(new Date().getFullYear() - 80, new Date().getFullYear() + 20, this.selectedDate.getFullYear());
     yearSelect.className = 'yearSelect';
