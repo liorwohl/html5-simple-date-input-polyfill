@@ -1,6 +1,6 @@
 {
   "name": "nodep-date-input-polyfill",
-  "version": "0.8.0",
+  "version": "0.8.1",
   "description": "Automatically adds datepickers to input[type=date] on IE, Firefox, and OS X Safari.",
   "main": "nodep-date-input-polyfill.dist.js",
   "author": {
@@ -12,7 +12,13 @@
     "url": "git://github.com/brianblakely/nodep-date-input-polyfill.git"
   },
   "bugs": "https://github.com/brianblakely/nodep-date-input-polyfill/issues",
-  "keywords": ["html5","date","datepicker","type","polyfill"],
+  "keywords": [
+    "html5",
+    "date",
+    "datepicker",
+    "type",
+    "polyfill"
+  ],
   "analyze": true,
   "license": "MIT",
   "devDependencies": {
@@ -31,5 +37,4 @@
   "dependencies": {
     "babel-runtime": "^6.3.19"
   }
-} 
- 
+}
