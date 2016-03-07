@@ -47,8 +47,14 @@ class Picker {
     // also on various click events to capture it in all corner cases.
     const showPicker = ()=> {
       const rekt = this.theInput.getBoundingClientRect();
-      this.thePicker.style.top = `${rekt.top+rekt.height+document.body.scrollTop}px`;
-      this.thePicker.style.left = `${rekt.left+document.body.scrollLeft}px`;
+      this.thePicker.style.top = `${
+        rekt.top + rekt.height
+        + document.documentElement.scrollTop + document.body.scrollTop
+      }px`;
+      this.thePicker.style.left = `${
+        rekt.left
+        + document.documentElement.scrollLeft + document.body.scrollLeft
+      }px`;
       this.thePicker.style.display = `block`;
     };
     this.theInput.addEventListener(`focus`, showPicker);
