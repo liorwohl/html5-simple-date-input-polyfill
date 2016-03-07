@@ -1,20 +1,40 @@
-﻿{
-  "name": "html5-simple-date-input-polyfill",
-  "version": "1.1.0",
-  "description": "input type date polyfill",
-  "main": "html5-simple-date-input-polyfill.js",
+{
+  "name": "nodep-date-input-polyfill",
+  "version": "0.8.1",
+  "description": "Automatically adds datepickers to input[type=date] on IE, Firefox, and OS X Safari.",
+  "main": "nodep-date-input-polyfill.dist.js",
   "author": {
-    "name": "Lior Wohl",
-    "email": "liorwohl@gmail.com"
+    "name": "Brian Blakely",
+    "email": "anewpage.media@gmail.com"
   },
   "repository": {
     "type": "git",
-    "url": "git://github.com/liorwohl/html5-simple-date-input-polyfill.git"
+    "url": "git://github.com/brianblakely/nodep-date-input-polyfill.git"
   },
-  "bugs": "https://github.com/liorwohl/html5-simple-date-input-polyfill/issues",
-  "keywords": ["html5","date","datepicker","type"],
+  "bugs": "https://github.com/brianblakely/nodep-date-input-polyfill/issues",
+  "keywords": [
+    "html5",
+    "date",
+    "datepicker",
+    "type",
+    "polyfill"
+  ],
   "analyze": true,
   "license": "MIT",
-  "readme": "ERROR: No README data found!"
-} 
- 
+  "devDependencies": {
+    "babel-core": "^6.4.5",
+    "babel-loader": "^6.2.2",
+    "babel-plugin-transform-runtime": "^6.4.3",
+    "babel-preset-es2015": "^6.3.13",
+    "babel-preset-stage-3": "^6.3.13",
+    "css-loader": "^0.23.1",
+    "node-sass": "^3.4.2",
+    "sass-loader": "^3.1.2",
+    "style-loader": "^0.13.0",
+    "webpack": "^1.12.13",
+    "webpack-dev-server": "^1.14.1"
+  },
+  "dependencies": {
+    "babel-runtime": "^6.3.19"
+  }
+}

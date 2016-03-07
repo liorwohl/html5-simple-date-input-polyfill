@@ -1,28 +1,35 @@
 <!DOCTYPE html>
-<html>
+<html style="height: 100%;">
   <head>
-
-    <link rel="stylesheet" href="html5-simple-date-input-polyfill.css" />
-
+    <meta charset="UTF-8">
+    <title>nodep Polyfill Test</title>
+    <meta name="description" content="nodep Polyfill Test">
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes">
   </head>
-  <body>
+  <body style="width: 200%; height: 200%;">
 
-    normal:
-    <input type="date" />
+    <p>
+      normal:
+      <input type="date" />
+    </p>
 
-    with value:
-    <input type="date" value="2015-03-28" />
+    <p>
+      with value:
+      <input type="date" value="2015-03-28" />
+    </p>
 
-    dynamically created:
-    <script>
-      setTimeout(function(){
-        var input = document.createElement("input");
-        input.type = "date";
-        document.body.appendChild(input);
-      }, 2000);
-    </script>
+    <p id="dynamic" style="margin-top: 25%; margin-left: 25%;">
+      dynamically created:
+      <script>
+        setTimeout(function() {
+          var input = document.createElement("input");
+          input.type = "date";
+          document.getElementById("dynamic").appendChild(input);
+        }, 2000);
+      </script>
+    </p>
 
-    <script src="html5-simple-date-input-polyfill.min.js"></script>
+    <script src="nodep-date-input-polyfill.dist.js"></script>
 
   </body>
 </html>
