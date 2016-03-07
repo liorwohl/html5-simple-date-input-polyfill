@@ -6,22 +6,23 @@
   width: auto;
   padding: 0;
   line-height: normal;
-  border: 0;
   box-shadow: none;
   border-radius: 0;
   font-family: sans-serif;
   font-size: 14px;
 }
 
-.picker {
-  &, select, table, th, td {
-    @include reset();
-  }
-
-  position: absolute;
-  border: 1px solid #c0c0c0;
+date-input-polyfill {
+  @include reset();
+  position: absolute !important;
+  border: 1px solid #c0c0c0 !important;
   text-align: center;
+  z-index: 1;
   
+  select, table, th, td {
+    @include reset();
+    border: 0;
+  }
   select {  
     margin: 3px 5px;
     border: 1px solid #c0c0c0;
