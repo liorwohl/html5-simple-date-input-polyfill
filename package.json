@@ -1,6 +1,7 @@
 ﻿{
-  "name": "html5-simple-date-input-polyfill",
-  "version": "1.1.0",
+  "name": "simple-date-input-polyfill-html5",
+  "title": "simple-date-input-polyfill-html5",
+  "version": "0.0.0",
   "description": "input type date polyfill",
   "main": "html5-simple-date-input-polyfill.js",
   "author": {
@@ -9,12 +10,10 @@
   },
   "repository": {
     "type": "git",
-    "url": "git://github.com/liorwohl/html5-simple-date-input-polyfill.git"
+    "url": "git://github.com/bharatModiIsMe/simple-date-input-polyfill-html5.git"
   },
-  "bugs": "https://github.com/liorwohl/html5-simple-date-input-polyfill/issues",
   "keywords": ["html5","date","datepicker","type"],
   "analyze": true,
-  "license": "MIT",
-  "readme": "ERROR: No README data found!"
+  "license": "MIT"
 } 
  
