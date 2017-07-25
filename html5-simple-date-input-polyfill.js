@@ -9,6 +9,7 @@ function calanderExtender (theInput) {
 
   this.init = function () {
     this.getDateFromInput();
+    console.log(this.getDateFromInput());
     this.createCal();
   };
 
@@ -29,7 +30,7 @@ function calanderExtender (theInput) {
     //creating a container div around the input, the calendar will also be there
     this.container = document.createElement('div');
     this.container.className = 'calanderContainer';
-    this.container.style.display = 'inline-block';
+    this.container.style.display = 'inline';
     this.theInput.parentNode.replaceChild(this.container, this.theInput);
     this.container.appendChild(this.theInput);
 
@@ -167,12 +168,13 @@ function calanderExtender (theInput) {
       dayText = '0' + dayText;
     }
 
-    this.theInput.value = '' + this.selectedDate.getFullYear() + '-' + monthText + '-' + dayText + '';
+    this.theInput.value = '' + monthText + '/' + dayText + '/' + this.selectedDate.getFullYear() + '';
 
     //make angular see the change
     var fakeEvent = document.createEvent('KeyboardEvent');
     fakeEvent.initEvent("change", true, false);
     this.theInput.dispatchEvent(fakeEvent);
+    this.hide();
   };
 
   //helper function to create html select tags
