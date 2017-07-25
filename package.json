@@ -8,6 +8,10 @@
     "name": "Lior Wohl",
     "email": "liorwohl@gmail.com"
   },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/bharatModiIsMe/simple-date-input-polyfill-html5.git"
+  },
   "keywords": ["html5","date","datepicker","type"],
   "analyze": true,
   "license": "MIT"
