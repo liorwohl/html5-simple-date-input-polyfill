@@ -13,7 +13,7 @@
   font-size: 14px;
 }
 
-.calander {
+.calendar {
   &, select, table, th, td {
     @include reset();
   }
@@ -21,8 +21,8 @@
   position: absolute;
   border: 1px solid #c0c0c0;
   text-align: center;
-  
-  select {  
+
+  select {
     margin: 3px 5px;
     border: 1px solid #c0c0c0;
   }
@@ -36,7 +36,7 @@
   td {
     cursor: pointer;
   }
-  
+
   .selected {
     font-weight: bold;
   }

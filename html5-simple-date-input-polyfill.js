@@ -1,4 +1,4 @@
-function calanderExtender (theInput) {
+function calendarExtender (theInput) {
 
   var self = this;
 
@@ -28,14 +28,14 @@ function calanderExtender (theInput) {
   this.createCal = function () {
     //creating a container div around the input, the calendar will also be there
     this.container = document.createElement('div');
-    this.container.className = 'calanderContainer';
+    this.container.className = 'calendarContainer';
     this.container.style.display = 'inline-block';
     this.theInput.parentNode.replaceChild(this.container, this.theInput);
     this.container.appendChild(this.theInput);
 
     //the calendar div
     this.theCalDiv = document.createElement('div');
-    this.theCalDiv.className = 'calander';
+    this.theCalDiv.className = 'calendar';
     this.theCalDiv.style.display = 'none';
     this.container.appendChild(this.theCalDiv);
 
@@ -60,7 +60,7 @@ function calanderExtender (theInput) {
     //close the calendar when clicking outside of the input or calendar
     document.addEventListener('click', function (e) {
       if (e.target.parentNode !== self.container &&
-          e.target.parentNode.parentNode !== self.container && 
+          e.target.parentNode.parentNode !== self.container &&
           e.target.parentNode.parentNode !== self.theCalDiv
       ) {
         self.theCalDiv.style.display = 'none';
@@ -213,29 +213,29 @@ function checkDateInputSupport () {
   input.setAttribute('type','date');
 
   var notADateValue = 'not-a-date';
-  input.setAttribute('value', notADateValue); 
+  input.setAttribute('value', notADateValue);
 
   return !(input.value === notADateValue);
 }
 
-//will add the calanderExtender to all inputs in the page
-function addCalanderExtenderToDateInputs () {
+//will add the calendarExtender to all inputs in the page
+function addcalendarExtenderToDateInputs () {
   //get and loop all the input[type=date]s in the page that dont have "haveCal" class yet
   var dateInputs = document.querySelectorAll('input[type=date]:not(.haveCal)');
   [].forEach.call(dateInputs, function (dateInput) {
-    //call calanderExtender function on the input
-    new calanderExtender(dateInput);
+    //call calendarExtender function on the input
+    new calendarExtender(dateInput);
     //mark that it have calendar
     dateInput.classList.add('haveCal');
   });
 }
 
-//run the above code on any <input type='date'> in the document, also on dynamically created ones 
+//run the above code on any <input type='date'> in the document, also on dynamically created ones
 //check if type=date is supported or if not mobile, they have built-in support for type='date'
 if (!checkDateInputSupport() && typeof window.orientation === 'undefined') {
-  addCalanderExtenderToDateInputs();
+  addcalendarExtenderToDateInputs();
   //this is also on mousedown event so it will capture new inputs that might joined to the dom dynamically
   document.querySelector('body').addEventListener('mousedown', function (event) {
-    addCalanderExtenderToDateInputs();
+    addcalendarExtenderToDateInputs();
   });
 }
