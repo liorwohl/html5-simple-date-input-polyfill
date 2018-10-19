@@ -207,15 +207,14 @@ function calendarExtender (theInput) {
   this.init();
 }
 
-//return false if the browser dont support input[type=date]
-function checkDateInputSupport () {
+function hasDateInputSupport () {
   var input = document.createElement('input');
   input.setAttribute('type','date');
 
   var notADateValue = 'not-a-date';
   input.setAttribute('value', notADateValue);
 
-  return !(input.value === notADateValue);
+  return input.value === notADateValue;
 }
 
 //will add the calendarExtender to all inputs in the page
@@ -232,7 +231,7 @@ function addcalendarExtenderToDateInputs () {
 
 //run the above code on any <input type='date'> in the document, also on dynamically created ones
 //check if type=date is supported or if not mobile, they have built-in support for type='date'
-if (!checkDateInputSupport() && typeof window.orientation === 'undefined') {
+if (hasDateInputSupport() && typeof window.orientation === 'undefined') {
   addcalendarExtenderToDateInputs();
   //this is also on mousedown event so it will capture new inputs that might joined to the dom dynamically
   document.querySelector('body').addEventListener('mousedown', function (event) {
