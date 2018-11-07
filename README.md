@@ -1,5 +1,5 @@
 # html5-simple-date-input-polyfill
-Just include this simple script and IE (>=10) and Firefox will support `<input type="date">` without any dependencies, not even jQuery! 🎉
+Just include this simple script and IE (>=10) and Safari will support `<input type="date">` without any dependencies, not even jQuery! 🎉
 
 Support dynamically created inputs, so can be used in single page applications.
 
