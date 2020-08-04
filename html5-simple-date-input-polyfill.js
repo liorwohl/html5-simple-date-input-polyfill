@@ -15,7 +15,8 @@ function calendarExtender (theInput) {
   //update selectedDate with the date from the input, return true if changed
   this.getDateFromInput = function () {
     if (this.theInput.value) {
-      var possibleNewDate = new Date(this.theInput.value);
+      var parts = this.theInput.value.split('-');
+      var possibleNewDate = new Date(parts[0], (parts[1] - 1 || 0), (parts[2] || 1));
       if (Date.parse(this.theInput.value) && possibleNewDate.toDateString() !== this.selectedDate.toDateString()) {
         this.selectedDate = possibleNewDate;
         return true;
